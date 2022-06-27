@@ -1,0 +1,16 @@
+1 - CRUD
+    1.1 -Container
+        Cliente
+        Numero TEST1234567
+        Tipo 20/40
+        Status Cheio/Vazio
+        Categoria Importação/Exportação
+
+    1.2 -Movimentação
+        Tipo    Embarque/Descarga/Gate in/ Gate Out/Reposicionamento/ Pesagem/ Scanner
+        Data hora início
+        Data hora fim
+
+2 - Relatório
+    2.1 -Total de movimentação agrupados por cliente e tipo de movimentação
+    2.2 - Sumário Importação/Exportação
