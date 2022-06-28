@@ -2,7 +2,7 @@
 ![Badge de licença](http://img.shields.io/static/v1?label=LICENÇA&message=GNU&color=sucess&style=for-the-badge)   ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=yellowgreen&style=for-the-badge)   ![Badge versionamento](http://img.shields.io/static/v1?label=VERSAO&message=1.0&color=sucess&style=for-the-badge)
 
 ### Sobre
-A aplicação consiste em um CRUD de containeres e movimentações e um relatório final
+A aplicação consiste em um CRUD de containeres e movimentações e um relatório final. (Mais informações no `requisitos.txt`)
 
 ### Bora ver como está ficando?
 
