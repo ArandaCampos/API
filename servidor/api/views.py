@@ -23,8 +23,8 @@ def ContainerView(request):
         mov = int(parse_data['movimentacao'])
         if (not validatorContainer(cliente, num, tipo, sta, cat)):
             return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
-        movimentacao = Movimentacao.objects.get(id__iexact=mov)
         try:
+            movimentacao = Movimentacao.objects.get(id__iexact=mov)
             novo = Container.objects.create(cliente=cliente, numero=num, tipo=tipo, status=sta, categoria=cat, movimentacao=movimentacao)
             novo.save()
             return JsonResponse([{'msg': 'Criado com sucesso'}], safe=False)
@@ -41,20 +41,6 @@ def ContainerIdView(request, id):
                 'msg': 'Falha na conexão com o banco de dados'
             }]
         return JsonResponse(dados, safe=False)
-    if request.method == 'POST':
-        parse_data = json.load(request)
-        cliente = parse_data['tipo']
-        data_inicio = parse_data['data_inicio']
-        data_fim = parse_data['data_fim']
-        if (not validatorMovimentacao(cliente, data_inicio, data_fim)):
-            return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
-        try:
-            novo = Movimentacao.objects.create(cliente=cliente, data_inicio=data_inicio, data_fim=data_fim)
-            novo.save()
-            return JsonResponse([{'msg': 'Criado com sucesso'}], safe=False)
-        except:
-            return JsonResponse([{'msg': 'Erro na criação'}], safe=False)
-
 
 def MovimentacaoView(request):
     if request.method == 'GET':
@@ -65,6 +51,20 @@ def MovimentacaoView(request):
                 'msg': 'Falha na conexão com o banco de dados'
             }]
         return JsonResponse(dados, safe=False)
+    elif request.method == 'POST':
+        parse_data = json.load(request)
+        tipo = parse_data['tipo']
+        data_inicio = parse_data['data_inicio']
+        data_fim = parse_data['data_fim']
+        if (not validatorMovimentacao(tipo, data_inicio, data_fim)):
+            return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
+        try:
+            novo = Movimentacao.objects.create(cliente=tipo, data_inicio=data_inicio, data_fim=data_fim)
+            novo.save()
+            return JsonResponse([{'msg': 'Criado com sucesso'}], safe=False)
+        except:
+            return JsonResponse([{'msg': 'Erro na criação'}], safe=False)
+
 
 def MovimentacaoIdView(request, id):
     if request.method == 'GET':
