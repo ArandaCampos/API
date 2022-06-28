@@ -2,6 +2,7 @@ import Api from "../api";
 import React from "react";
 import InputLabel from "../components/InputLabel";
 import SelectText from "../components/SelectText";
+import styled from "styled-components";
 
 export default class PostContainer extends React.Component{
     constructor(props){
@@ -47,14 +48,66 @@ export default class PostContainer extends React.Component{
 
     render(){
         return(
-            <>
+            <Center>
+                <Title>Adicionar container</Title>
                 <InputLabel callback={this.setValues} name="cliente" label="Cliente" value='' />
                 <InputLabel callback={this.setValues} name="numero" label="Numero" value='' />
                 <SelectText fields={['40', '20']} callback={this.setValues} name="tipo" label="Tipo" value={this.state.tipo} />
                 <SelectText fields={['cheio', 'vazio']} callback={this.setValues} name="status" label="Status" value={this.state.status} />
                 <SelectText fields={['importação', 'exportação']} callback={this.setValues} name="categoria" label="Categoria" value={this.state.categoria} />
-                <button onClick={() => this.sendForm()}/>
-            </>
+                <Button onClick={() => this.sendForm()}>Submeter</Button>
+            </Center>
         )
     }
 }
+
+const Button = styled.button`
+    width: 250px;
+    height: 50px;
+    margin-top: 20px;
+
+    border: none;
+    background-color: #253659;
+    color: white;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #0695D4;
+    }
+`;
+
+const Link = styled.a`
+    text-decoration: none;
+    color: white;
+`;
+
+const Table = styled.table`
+    margin-top: 30px;
+    border-collapse: separate;
+    border-spacing: 0px;
+`;
+const HeaderTable = styled.tr`
+    background-color: #253659;
+    color: white;
+`;
+
+const FieldTable = styled.th`
+    padding: 10px 20px;
+`;
+
+const Title = styled.h1`
+    color: black;
+    font-size: 25px;
+`;
+
+const Alert = styled.p`
+    color: red;
+    font-size: 15px;
+`;
+
+const Center = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;

@@ -1,6 +1,6 @@
 import React , { useState, useEffect }from "react";
-import { useParams } from 'react-router-dom'
 import Api from "../api";
+import styled from "styled-components";
 
 export default function Cont(){
     const [dados, setDados] = useState()
@@ -17,28 +17,96 @@ export default function Cont(){
 
     return(
         <>
-            <h1>Container</h1>
-            <table>
-                <tr>
-                    <th>Id</th>
-                    <th>Cliente</th>
-                    <th>Número</th>
-                    <th>Tipo</th>
-                    <th>Status</th>
-                    <th>Categoria</th>
-                </tr>
-            {dados && dados.map((dado) => (
-                <tr>
-                    <td>{dado.id}</td>
-                    <td>{dado.cliente}</td>
-                    <td>{dado.numero}</td>
-                    <td>{dado.tipo}</td>
-                    <td>{dado.status}</td>
-                    <td>{dado.categoria}</td>
-                </tr>
-            ))}
-            </table>
+            <Title>Container</Title>
+            {error ? <Alert>{error}</Alert> : ''}
+            <Center >
+                <Table>
+                    <HeaderTable>
+                        <FieldTable>Id</FieldTable>
+                        <FieldTable>Cliente</FieldTable>
+                        <FieldTable>Número</FieldTable>
+                        <FieldTable>Tipo</FieldTable>
+                        <FieldTable>Status</FieldTable>
+                        <FieldTable>Categoria</FieldTable>
+                        <FieldTable>Editar</FieldTable>
+                    </HeaderTable>
+                {dados && dados.map((dado) => (
+                    <BodyTable>
+                        <FieldTable>{dado.id}</FieldTable>
+                        <FieldTable>{dado.cliente}</FieldTable>
+                        <FieldTable>{dado.numero}</FieldTable>
+                        <FieldTable>{dado.tipo}</FieldTable>
+                        <FieldTable>{dado.status}</FieldTable>
+                        <FieldTable>{dado.categoria}</FieldTable>
+                        <FieldTable><Button><Link href={'container/'+dado.id}>Editar</Link></Button></FieldTable>
+                    </BodyTable>
+                ))}
+                    <FooterTable>
+                        <FieldTable></FieldTable>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <FieldTable><Button><Link href='container/post'>Adicionar</Link></Button></FieldTable>
+                    </FooterTable>
+                </Table>
+            </Center>
         </>
     )
-
 }
+
+const Button = styled.button`
+    width: 100%;
+    height: 30px;
+
+    border: none;
+    background-color: #03A696;
+`;
+
+const Link = styled.a`
+    text-decoration: none;
+    color: white;
+`;
+
+const Table = styled.table`
+    margin-top: 30px;
+    border-collapse: separate;
+    border-spacing: 0px;
+`;
+const HeaderTable = styled.tr`
+    background-color: #04BF9D;
+    color: black;
+`;
+
+const BodyTable = styled.tr`
+    background-color: #DEEFE7;
+    color:black;
+`;
+
+const FooterTable = styled.tr`
+    background-color: #DEEFE7;
+    color:black;
+`;
+
+
+const FieldTable = styled.th`
+    padding: 10px 20px;
+`;
+
+const Title = styled.h1`
+    color: black;
+    font-size: 25px;
+`;
+
+const Alert = styled.p`
+    color: red;
+    font-size: 15px;
+`;
+
+const Center = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
