@@ -6,6 +6,7 @@ import Relatorio from './routes/Relatorio';
 import Cont from './routes/Container';
 import ContainerId from './routes/ContainerId';
 import PostContainer from './routes/AddContainer';
+import PostMovimentacao from './routes/AddMovimentacao';
 import Menu from './components/Menu';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path='/container/post' element={<PostContainer />} />
           <Route path='/movimentacao' element={<Movimentacao />} />
           <Route path='/movimentacao/:id' element={<MovimentacaoId />} />
+          <Route path='/movimentacao/post' element={<PostMovimentacao />} />
         </Routes>
       </BrowserRouter>
     </div>

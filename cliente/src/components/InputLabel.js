@@ -61,7 +61,7 @@ const Label = styled.span`
     position: relative;
     top: 42px;
     left: -72px;
-    background-color: white;
+    background-color: whitesmoke;
     transition: 2s;
     & > p{
         font-size: 15px;
@@ -83,6 +83,7 @@ const Input = styled.input`
     padding-left: 15px;
     border: 2px solid #03A696;
     border-radius: 5px;
+    background-color: whitesmoke;
     &:hover{
         border-color: #F27457;
     }

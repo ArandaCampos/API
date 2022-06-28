@@ -1,14 +1,13 @@
 import React from 'react';
 import styled , { keyframes } from 'styled-components';
 
-export default class SelectText extends React.Component{
+export default class SelectDateTime extends React.Component{
     constructor(props){
         super(props)
         this.state = {
             click: '',
             label: props.label,
             value: props.value,
-            fields: props.fields,
             name: props.name,
         }
     }
@@ -24,11 +23,7 @@ export default class SelectText extends React.Component{
                 <Label className={this.state.click} onClick={() => this.setState({click: 'on'})}>
                     <p translate="no">{this.state.label}</p>
                 </Label>
-                <Select value={this.state.value} onChange={(event) => {this.handleState(event)}} onClick={() => this.setState({click: 'on'})}>
-                {this.state.fields && this.state.fields.map((value) => (
-                    <Field key={value} onChange={(event) => {this.handleState(event)}} onClick={() => this.setState({click: 'on'})}>{value}</Field>    
-                ))}
-                </Select>
+                <Input type="datetime-local" value={this.state.value} onChange={(event) => {this.handleState(event)}} onClick={() => this.setState({click: 'on'})} />
             </ Div>
         )
     }
@@ -42,7 +37,7 @@ const Up = keyframes`
     100%{
         padding-left: 10px;
         padding-right: 10px;
-        left: -77px;
+        left: -42px;
         top: 15px;
     }
 `;
@@ -65,7 +60,7 @@ const Label = styled.span`
     padding-right: 20px;
     position: relative;
     top: 42px;
-    left: -72px;
+    left: -32px;
     background-color: whitesmoke;
     transition: 2s;
     & > p{
@@ -81,9 +76,9 @@ const Label = styled.span`
     }
 `;
 
-const Select = styled.select`
+const Input = styled.input`
     height: 55px;
-    width: 250px;
+    width: 225px;
     
     padding-left: 15px;
     border: 2px solid #03A696;
@@ -99,15 +94,5 @@ const Select = styled.select`
     }
     &:focus, select:focus {
         outline: 0;
-    }
-`;
-
-const Field = styled.option`
-    height: 100%;
-    width: 100%;
-    
-    &:focus, select:focus {
-        outline: 0;
-        background-color: red;
     }
 `;
