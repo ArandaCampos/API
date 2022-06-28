@@ -86,7 +86,7 @@ const Select = styled.select`
     width: 250px;
     
     padding-left: 15px;
-    border: 2px solid #023535;
+    border: 2px solid #03A696;
     border-radius: 5px;
     display: none;
     display: flex;
@@ -95,7 +95,7 @@ const Select = styled.select`
     align-items: center;
     background-color: white;
     &:hover{
-        border-color: #0695D4;
+        border-color: #F27457;
     }
     &:focus, select:focus {
         outline: 0;

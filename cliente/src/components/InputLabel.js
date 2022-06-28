@@ -81,10 +81,10 @@ const Input = styled.input`
     height: 50px;
     width: 230px;
     padding-left: 15px;
-    border: 2px solid #023535;
+    border: 2px solid #03A696;
     border-radius: 5px;
     &:hover{
-        border-color: #0695D4;
+        border-color: #F27457;
     }
     &:focus, select:focus {
         outline: 0;

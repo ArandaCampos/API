@@ -67,12 +67,12 @@ const Button = styled.button`
     margin-top: 20px;
 
     border: none;
-    background-color: #253659;
+    background-color: #03A696;
     color: white;
     cursor: pointer;
 
     &:hover{
-        background-color: #0695D4;
+        background-color: #F27457;
     }
 `;
 
