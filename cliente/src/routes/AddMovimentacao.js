@@ -36,7 +36,7 @@ export default class PostMovimentacao extends React.Component{
             console.log(data)
         } else {
             console.log(data)
-            Api.post('container/', data)
+            Api.post('movimentacao/', data)
             .then(res => this.useState({['error']: 'Criado com sucesso'}))
             .catch(this.useState({'error' : 'Falha na conexão com o servidor!'}))
         }

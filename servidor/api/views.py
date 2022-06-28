@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from api.models import Container, Movimentacao
 from api.validator import validatorContainer, validatorMovimentacao
 import json
-import re 
+import datetime
 
 def ContainerView(request):
     if request.method == 'GET':
@@ -56,13 +56,16 @@ def MovimentacaoView(request):
         tipo = parse_data['tipo']
         data_inicio = parse_data['data_inicio']
         data_fim = parse_data['data_fim']
+        print(data_inicio)
         if (not validatorMovimentacao(tipo, data_inicio, data_fim)):
             return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
         try:
-            novo = Movimentacao.objects.create(cliente=tipo, data_inicio=data_inicio, data_fim=data_fim)
+            novo = Movimentacao.objects.create(tipo=tipo, data_inicio=data_inicio, data_fim=data_fim)
             novo.save()
+            print("Criado com sucesso")
             return JsonResponse([{'msg': 'Criado com sucesso'}], safe=False)
         except:
+            print("Falha na criação")
             return JsonResponse([{'msg': 'Erro na criação'}], safe=False)
 
 
