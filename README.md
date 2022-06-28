@@ -6,7 +6,7 @@ A aplicação consiste em um CRUD de containeres e movimentações e um relatór
 
 ### Bora ver como está ficando?
 
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/87876734/176083579-a934c4fc-356b-4824-af56-8fe3b0b2bafb.gif)
+![API](https://user-images.githubusercontent.com/87876734/176194341-76ed3796-2889-4bfb-8bfd-5c756b682db3.gif)
 
 ### Instalação
 
