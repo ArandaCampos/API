@@ -14,7 +14,7 @@ export default class PostContainer extends React.Component{
             status: 'cheio',
             categoria: 'importação',
             movimentacao: '1',
-            msg: ''
+            error: ''
         }
         this.setValues = this.setValues.bind(this)
     }
@@ -50,6 +50,7 @@ export default class PostContainer extends React.Component{
         return(
             <Center>
                 <Title>Adicionar container</Title>
+                {this.state.error ? <Alert>{this.state.error}</Alert> : ''}
                 <InputLabel callback={this.setValues} name="cliente" label="Cliente" value='' />
                 <InputLabel callback={this.setValues} name="numero" label="Numero" value='' />
                 <SelectText fields={['40', '20']} callback={this.setValues} name="tipo" label="Tipo" value={this.state.tipo} />

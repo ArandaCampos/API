@@ -24,15 +24,22 @@ export default function Movimentacao(){
                     <FieldTable>Tipo</FieldTable>
                     <FieldTable>Data e Hora de Início</FieldTable>
                     <FieldTable>Data e Hora de Fim</FieldTable>
+                    <FieldTable>Editar</FieldTable>
                 </HeaderTable>
             {dados && dados.map((dado) => (
                 <BodyTable>
                     <FieldTable>{dado.tipo}</FieldTable>
                     <FieldTable>{dado.data_inicio}</FieldTable>
                     <FieldTable>{dado.data_fim}</FieldTable>
-                    
+                    <FieldTable><Button><Link href={'movimentacao/'+dado.id}>Editar</Link></Button></FieldTable>
                 </BodyTable>
             ))}
+                <FooterTable>
+                    <FieldTable></FieldTable>
+                    <td></td>
+                    <td></td>
+                    <FieldTable><Button><Link href='movimentacao/post'>Adicionar</Link></Button></FieldTable>
+                </FooterTable>
             </Table>
         </Center>
     )

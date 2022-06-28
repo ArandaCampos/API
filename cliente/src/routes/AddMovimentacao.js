@@ -36,9 +36,9 @@ export default class PostMovimentacao extends React.Component{
             console.log(data)
         } else {
             console.log(data)
-            // Api.post('container/', data)
-            // .then(res => this.useState({'msg': 'Criado com sucesso'}))
-            // .catch(err => this.useState({'msg': err}))
+            Api.post('container/', data)
+            .then(res => this.useState({['error']: 'Criado com sucesso'}))
+            .catch(this.useState({'error' : 'Falha na conexão com o servidor!'}))
         }
     }
 
@@ -69,25 +69,6 @@ const Button = styled.button`
     &:hover{
         background-color: #F27457;
     }
-`;
-
-const Link = styled.a`
-    text-decoration: none;
-    color: white;
-`;
-
-const Table = styled.table`
-    margin-top: 30px;
-    border-collapse: separate;
-    border-spacing: 0px;
-`;
-const HeaderTable = styled.tr`
-    background-color: #253659;
-    color: white;
-`;
-
-const FieldTable = styled.th`
-    padding: 10px 20px;
 `;
 
 const Title = styled.h1`
