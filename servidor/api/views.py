@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from api.models import Container, Movimentacao
-from api.validator import validorContainer
+from api.validator import validatorContainer, validatorMovimentacao
 import json
 import re 
 
@@ -21,7 +21,7 @@ def ContainerView(request):
         sta = parse_data['status']
         cat = parse_data['categoria']
         mov = int(parse_data['movimentacao'])
-        if (not validorContainer(cliente, num, tipo, sta, cat)):
+        if (not validatorContainer(cliente, num, tipo, sta, cat)):
             return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
         movimentacao = Movimentacao.objects.get(id__iexact=mov)
         try:
@@ -40,7 +40,20 @@ def ContainerIdView(request, id):
             dados = [ {
                 'msg': 'Falha na conexão com o banco de dados'
             }]
-    return JsonResponse(dados, safe=False)
+        return JsonResponse(dados, safe=False)
+    if request.method == 'POST':
+        parse_data = json.load(request)
+        cliente = parse_data['tipo']
+        data_inicio = parse_data['data_inicio']
+        data_fim = parse_data['data_fim']
+        if (not validatorMovimentacao(cliente, data_inicio, data_fim)):
+            return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
+        try:
+            novo = Movimentacao.objects.create(cliente=cliente, data_inicio=data_inicio, data_fim=data_fim)
+            novo.save()
+            return JsonResponse([{'msg': 'Criado com sucesso'}], safe=False)
+        except:
+            return JsonResponse([{'msg': 'Erro na criação'}], safe=False)
 
 
 def MovimentacaoView(request):
