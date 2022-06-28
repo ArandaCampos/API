@@ -6,10 +6,12 @@ import Relatorio from './routes/Relatorio';
 import Cont from './routes/Container';
 import ContainerId from './routes/ContainerId';
 import PostContainer from './routes/AddContainer';
+import Menu from './components/Menu';
 
 function App() {
   return (
     <div className="App">
+      <Menu />
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Relatorio />} />

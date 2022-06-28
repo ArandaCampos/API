@@ -87,7 +87,7 @@ const Link = styled.a`
 `;
 
 const Table = styled.table`
-    margin-top: 30px;
+    margin-top: 10px;
     border-collapse: separate;
     border-spacing: 0px;
 `;
@@ -114,6 +114,7 @@ const FieldTable = styled.th`
 const Title = styled.h1`
     color: black;
     font-size: 25px;
+    margin-top: 20px;
 `;
 
 const Alert = styled.p`
