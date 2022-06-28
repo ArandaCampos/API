@@ -38,7 +38,8 @@ export default class PostContainer extends React.Component{
         if(!data['numero'].match("[A-Z]{4}[0-9]{7}")){
             this.setState({error: 'Número deve seguir o padrão: TEST1234567'})
         } else {
-            Api.post('container', data)
+            console.log(data)
+            Api.post('container/', data)
             .then(res => this.useState({'msg': 'Criado com sucesso'}))
             .catch(err => this.useState({'msg': err}))
         }

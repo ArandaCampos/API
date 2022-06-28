@@ -1,6 +1,8 @@
-from unicodedata import category
 from django.http import JsonResponse
 from api.models import Container, Movimentacao
+from api.validator import validorContainer
+import json
+import re 
 
 def ContainerView(request):
     if request.method == 'GET':
@@ -12,12 +14,15 @@ def ContainerView(request):
             }]
         return JsonResponse(dados, safe=False)
     if request.method == 'POST':
-        cliente = request.POST['cliente']
-        num = request.POST['numero']
-        tipo = request.POST['tipo']
-        sta = request.POST['status']
-        cat = request.POST['categoria']
-        mov = request.POST['movimentacao']
+        parse_data = json.load(request)
+        cliente = parse_data['cliente']
+        num = parse_data['numero']
+        tipo = int(parse_data['tipo'])
+        sta = parse_data['status']
+        cat = parse_data['categoria']
+        mov = int(parse_data['movimentacao'])
+        if (not validorContainer(cliente, num, tipo, sta, cat)):
+            return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
         movimentacao = Movimentacao.objects.get(id__iexact=mov)
         try:
             novo = Container.objects.create(cliente=cliente, numero=num, tipo=tipo, status=sta, categoria=cat, movimentacao=movimentacao)
