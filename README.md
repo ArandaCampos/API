@@ -11,10 +11,11 @@ A aplicação consiste em um CRUD de containeres e movimentações e um relatór
 ### Instalação
 
     # Clone o repositório
-    >> git clone https://github.com/ArandaCampos/API.git
+    >> mkdir API
+    >> git clone https://github.com/ArandaCampos/API.git API/
 
     # Crie um ambiente virtual na pasta servidor/
-    >> cd servidor
+    >> cd API/servidor
     >> virtualenv .
     >> source bin/activate
 
