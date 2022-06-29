@@ -8,7 +8,7 @@ export default function Movimentacao(){
 
     useEffect(() => {
         async function getApi (){
-            await Api.get('movimentacao')
+            await Api.get('movimentacao/')
             .then(res => setDados(res.data))
             .catch(erro => setError('Falha na conexão com o servidor'))
         }

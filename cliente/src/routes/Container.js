@@ -8,7 +8,7 @@ export default function Cont(){
 
     useEffect(() => {
         async function getApi (){
-            await Api.get('container')
+            await Api.get('container/')
             .then(res => setDados(res.data))
             .catch(erro => setError('Falha na conexão com o servidor'))
         }

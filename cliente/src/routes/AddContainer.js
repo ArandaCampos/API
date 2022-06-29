@@ -14,7 +14,8 @@ export default class PostContainer extends React.Component{
             status: 'cheio',
             categoria: 'importação',
             movimentacao: '1',
-            error: ''
+            error: '',
+            movs: []
         }
         this.setValues = this.setValues.bind(this)
     }
@@ -75,25 +76,6 @@ const Button = styled.button`
     &:hover{
         background-color: #F27457;
     }
-`;
-
-const Link = styled.a`
-    text-decoration: none;
-    color: white;
-`;
-
-const Table = styled.table`
-    margin-top: 30px;
-    border-collapse: separate;
-    border-spacing: 0px;
-`;
-const HeaderTable = styled.tr`
-    background-color: #253659;
-    color: white;
-`;
-
-const FieldTable = styled.th`
-    padding: 10px 20px;
 `;
 
 const Title = styled.h1`

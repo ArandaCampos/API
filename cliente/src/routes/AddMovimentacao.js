@@ -32,12 +32,12 @@ export default class PostMovimentacao extends React.Component{
             data_fim: this.state.data_fim,
         }
         if(!data['tipo'] || !data['data_inicio'] || !data['data_fim']){
-            this.setState({['error'] : 'Todos os campos devem ser preenchidos'})
+            this.setState({'error' : 'Todos os campos devem ser preenchidos'})
             console.log(data)
         } else {
             console.log(data)
             Api.post('movimentacao/', data)
-            .then(res => this.useState({['error']: 'Criado com sucesso'}))
+            .then(res => this.useState({'error': 'Criado com sucesso'}))
             .catch(this.useState({'error' : 'Falha na conexão com o servidor!'}))
         }
     }
