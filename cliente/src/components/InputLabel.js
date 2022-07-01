@@ -1,33 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled , { keyframes } from 'styled-components';
 
-export default class InputLabel extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            click: '',
-            name: props.name,
-            label: props.label,
-            value: props.value
-        }
+export default function InputLabel({ name, label, callback }){
+
+    const [click, setClick] = useState('')
+
+    function handleState(event){
+        const value = event.target.value
+        const name = event.target.name
+        callback(value, name)
     }
 
-    async handleState(event){
-        await this.setState({ value: event.target.value })
-        this.props.callback({[this.state.name]: this.state.value})
-    }
-
-    render(){
-        return (
-            <Div >
-                <Label className={this.state.click} onClick={() => this.setState({click: 'on'})}>
-                    <p translate="no">{this.state.label}</p>
-                </Label>
-                <Input onChange={(event) => {this.handleState(event)}} onFocus={() => {this.setState({click: 'on'})}}/>
-            </ Div>
-        )
-    }
-} 
+    return (
+        <Div >
+            <Label className={click} onClick={() => setClick('on')}>
+                <p translate="no">{label}</p>
+            </Label>
+            <Input name={name} onChange={(event) => handleState(event)} onFocus={() => setClick('on')}/>
+        </ Div>
+    )
+}
 
 const Up = keyframes`
     0%{

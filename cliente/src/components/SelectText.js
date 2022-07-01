@@ -1,37 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled , { keyframes } from 'styled-components';
 
-export default class SelectText extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            click: '',
-            label: props.label,
-            value: props.value,
-            fields: props.fields,
-            name: props.name,
-        }
-    }
+export default function SelectText({label, fields, name, callback}){
+    
+    const [click, setClick] = useState('')
 
-    async handleState(event){
-        await this.setState({ value: event.target.value })
-        this.props.callback({[this.state.name]: this.state.value})
+    function handleState(event){
+        const value = event.target.value
+        callback(value, name)
     }
-
-    render(){
-        return (
-            <Div >
-                <Label className={this.state.click} onClick={() => this.setState({click: 'on'})}>
-                    <p translate="no">{this.state.label}</p>
-                </Label>
-                <Select value={this.state.value} onChange={(event) => {this.handleState(event)}} onClick={() => this.setState({click: 'on'})}>
-                {this.state.fields && this.state.fields.map((value) => (
-                    <Field key={value} onChange={(event) => {this.handleState(event)}} onClick={() => this.setState({click: 'on'})}>{value}</Field>    
-                ))}
-                </Select>
-            </ Div>
-        )
-    }
+    
+    return (
+        <Div >
+            <Label className={click} onClick={() => setClick('on')}>
+                <p translate="no">{label}</p>
+            </Label>
+            <Select onChange={(event) => handleState(event)} onClick={() => setClick('on')}>
+            {fields && fields.map((value) => (
+                <Field value={value} key={value} onChange={(event) => handleState(event)} onClick={() => setClick('on')}>{value}</Field>    
+            ))}
+            </Select>
+        </ Div>
+    )
 }
 
 const Up = keyframes`

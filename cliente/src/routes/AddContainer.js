@@ -1,66 +1,64 @@
 import Api from "../api";
-import React from "react";
+import React, { useState } from "react";
 import InputLabel from "../components/InputLabel";
 import SelectText from "../components/SelectText";
 import styled from "styled-components";
 
-export default class PostContainer extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            cliente: '',
-            numero: '',
-            tipo: 40,
-            status: 'cheio',
-            categoria: 'importação',
-            movimentacao: '1',
-            error: '',
-            movs: []
-        }
-        this.setValues = this.setValues.bind(this)
+export default function PostContainer(){
+    const [dados, setDados] = useState([
+        { name: 'cliente', value: ''},
+        { name: 'numero', value: ''},
+        { name: 'tipo', value: ''},
+        { name: 'status', value: ''},
+        { name: 'categoria', value: ''}
+    ])
+
+    const [error, setError] = useState()
+    const [sucess, setSucess] = useState()
+    const setValuesBind = setValues.bind(this)
+
+    function setValues(value, name){
+        console.log(value + ' ' + name)
+        const update = dados.map( (fields) => {
+            return fields.name === name ? {...fields, value: value} : fields
+        });
+        setDados(update)
     }
 
-    setValues(field){
-        this.setState(field)
-    }
+    function sendForm(){
+        setError()
+        setSucess()
+        const data = {}
+        dados.map((field) => {     
+            return data[field.name] = field.value
+        })
+        console.log(data)
 
-    handleInput(e){
-        this.setState({[e.target.name]: e.target.value})
-    }
-
-    sendForm(){
-        const data = {
-            cliente: this.state.cliente,
-            numero: this.state.numero,
-            tipo: this.state.tipo,
-            status: this.state.status,
-            categoria: this.state.categoria,
-            movimentacao: this.state.movimentacao
-        }
         if(!data['numero'].match("[A-Z]{4}[0-9]{7}")){
-            this.setState({error: 'Número deve seguir o padrão: TEST1234567'})
+            setError('Número deve seguir o padrão: TEST1234567')
+        }else if (data['tipo'] === '' || data['status'] === '' || data['categoria'] === ''){
+            setError('Todos os campos devem ser preenchidos!')
         } else {
             console.log(data)
             Api.post('container/', data)
-            .then(res => this.useState({'msg': 'Criado com sucesso'}))
-            .catch(err => this.useState({'msg': err}))
+            .then((res) => setSucess('Criado com sucesso'))
+            .catch((err) => setError('Falha de conexão com o servidor!'))
         }
     }
 
-    render(){
-        return(
-            <Center>
-                <Title>Adicionar container</Title>
-                {this.state.error ? <Alert>{this.state.error}</Alert> : ''}
-                <InputLabel callback={this.setValues} name="cliente" label="Cliente" value='' />
-                <InputLabel callback={this.setValues} name="numero" label="Numero" value='' />
-                <SelectText fields={['40', '20']} callback={this.setValues} name="tipo" label="Tipo" value={this.state.tipo} />
-                <SelectText fields={['cheio', 'vazio']} callback={this.setValues} name="status" label="Status" value={this.state.status} />
-                <SelectText fields={['importação', 'exportação']} callback={this.setValues} name="categoria" label="Categoria" value={this.state.categoria} />
-                <Button onClick={() => this.sendForm()}>Submeter</Button>
-            </Center>
-        )
-    }
+    return(
+        <Center>
+            <Title>Adicionar container</Title>
+            {error ? <Alert>{error}</Alert> : ''}
+            {sucess ? <Sucess>{sucess}</Sucess> : ''}
+            <InputLabel callback={setValuesBind} name="cliente" label="Cliente" value='' />
+            <InputLabel callback={setValuesBind} name="numero" label="Numero" value='' />
+            <SelectText fields={['','40', '20']} callback={setValuesBind} name="tipo" label="Tipo" />
+            <SelectText fields={['','cheio', 'vazio']} callback={setValuesBind} name="status" label="Status" />
+            <SelectText fields={['','importação', 'exportação']} callback={setValuesBind} name="categoria" label="Categoria" />
+            <Button onClick={() => sendForm()}>Submeter</Button>
+        </Center>
+    )
 }
 
 const Button = styled.button`
@@ -85,6 +83,11 @@ const Title = styled.h1`
 
 const Alert = styled.p`
     color: red;
+    font-size: 15px;
+`;
+
+const Sucess = styled.p`
+    color: green;
     font-size: 15px;
 `;
 

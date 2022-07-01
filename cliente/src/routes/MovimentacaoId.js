@@ -7,6 +7,7 @@ export default function MovimentacaoId(){
     const { id } = useParams()
     const [dados, setDados] = useState()
     const [error, setError] = useState()
+    const [update, setUpdate] = useState()
 
     useEffect(() => {
         async function getApi (){
@@ -15,7 +16,16 @@ export default function MovimentacaoId(){
             .catch(erro => setError('Falha na conexão com o servidor'))
         }
         getApi()
-    }, [])
+    }, [update])
+    
+    async function excluir(id){
+        await Api.delete(`movimentacao/${id}`)
+        .then(res => setDados(res.data))
+        .catch(erro => setError('Falha na conexão com o servidor'))
+
+        setUpdate('atualizar')
+    
+    }
 
     return(
         <Center>
@@ -33,7 +43,7 @@ export default function MovimentacaoId(){
                     <FieldTable>{dado.id}</FieldTable>
                     <FieldTable>{dado.tipo}</FieldTable>
                     <FieldTable>{dado.data_inicio}</FieldTable>
-                    <FieldTable>{dado.data_fim}</FieldTable>  
+                    <FieldTable>{dado.data_fim}</FieldTable> 
                 </BodyTable>
             ))}
             </Table>

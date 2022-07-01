@@ -15,6 +15,12 @@ export default function Cont(){
         getApi()
     }, [])
 
+    async function excluir(id){
+        await Api.delete(`container/${id}`)
+        .then(res => setDados(res.data))
+        .catch(erro => setError('Falha na conexão com o servidor'))
+    }
+
     return(
         <>
             <Title>Container</Title>
@@ -29,6 +35,7 @@ export default function Cont(){
                         <FieldTable>Status</FieldTable>
                         <FieldTable>Categoria</FieldTable>
                         <FieldTable>Editar</FieldTable>
+                        <FieldTable>Excluir</FieldTable>
                     </HeaderTable>
                 {dados && dados.map((dado) => (
                     <BodyTable>
@@ -39,10 +46,12 @@ export default function Cont(){
                         <FieldTable>{dado.status}</FieldTable>
                         <FieldTable>{dado.categoria}</FieldTable>
                         <FieldTable><Button><Link href={'container/'+dado.id}>Editar</Link></Button></FieldTable>
+                        <FieldTable><Button onClick={() => excluir(dado.id)}>Excluir</Button></FieldTable>
                     </BodyTable>
                 ))}
                     <FooterTable>
                         <FieldTable></FieldTable>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -62,6 +71,8 @@ const Button = styled.button`
 
     border: none;
     background-color: #03A696;
+    color: white;
+    cursor: pointer;
 `;
 
 const Link = styled.a`

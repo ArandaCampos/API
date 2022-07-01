@@ -41,6 +41,16 @@ def ContainerIdView(request, id):
                 'msg': 'Falha na conexão com o banco de dados'
             }]
         return JsonResponse(dados, safe=False)
+    elif request.method == 'DELETE':
+        try:
+            container = Container.objects.get(id=id)
+            container.delete()
+            dados = [{'msg': 'Excluído com sucesso!'}]
+        except:
+            dados = [ {
+                'msg': 'Falha na conexão com o banco de dados'
+            }]
+        return JsonResponse(dados, safe=False)
 
 def MovimentacaoView(request):
     if request.method == 'GET':
@@ -77,7 +87,18 @@ def MovimentacaoIdView(request, id):
             dados = [ {
                 'msg': 'Falha na conexão com o banco de dados'
             }]
+        return JsonResponse(dados, safe=False)
+    elif request.method == 'DELETE':
+        try:
+            movimentacao = Movimentacao.objects.get(id=id)
+            movimentacao.delete()
+            dados = [{'msg': 'Movimentação excluída com sucesso!'}]
+        except:
+            dados = [ {
+                'msg': 'Falha na conexão com o banco de dados'
+            }]
     return JsonResponse(dados, safe=False)
+
 
 
 def RelatorioClienteView(request):

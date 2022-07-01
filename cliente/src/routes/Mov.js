@@ -15,6 +15,13 @@ export default function Movimentacao(){
         getApi()
     }, [])
 
+    async function excluir(id){
+        await Api.delete(`movimentacao/${id}`)
+        .then(res => setDados(res.data))
+        .catch(erro => setError('Falha na conexão com o servidor'))
+
+    }
+
     return(
         <Center>
             <Title>Movimentações</Title>
@@ -25,6 +32,7 @@ export default function Movimentacao(){
                     <FieldTable>Data e Hora de Início</FieldTable>
                     <FieldTable>Data e Hora de Fim</FieldTable>
                     <FieldTable>Editar</FieldTable>
+                    <FieldTable>Exluir</FieldTable>
                 </HeaderTable>
             {dados && dados.map((dado) => (
                 <BodyTable>
@@ -32,10 +40,12 @@ export default function Movimentacao(){
                     <FieldTable>{dado.data_inicio}</FieldTable>
                     <FieldTable>{dado.data_fim}</FieldTable>
                     <FieldTable><Button><Link href={'movimentacao/'+dado.id}>Editar</Link></Button></FieldTable>
+                    <FieldTable><Button onClick={() => excluir(dado.id)}>Excluir</Button></FieldTable> 
                 </BodyTable>
             ))}
                 <FooterTable>
                     <FieldTable></FieldTable>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <FieldTable><Button><Link href='movimentacao/post'>Adicionar</Link></Button></FieldTable>
@@ -52,6 +62,8 @@ const Button = styled.button`
 
     border: none;
     background-color: #03A696;
+    color:white;
+    cursor: pointer;
 `;
 
 const Link = styled.a`
