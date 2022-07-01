@@ -1,32 +1,22 @@
-import React from 'react';
+import React , { useState } from 'react';
 import styled , { keyframes } from 'styled-components';
 
-export default class SelectDateTime extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            click: '',
-            label: props.label,
-            value: props.value,
-            name: props.name,
-        }
+export default function SelectDateTime({ label, name, callback }){
+    const [click, setClick] = useState('')
+
+    function handleState(event){
+        const value = event.target.value
+        callback(value, name)
     }
 
-    async handleState(event){
-        await this.setState({ value: event.target.value })
-        this.props.callback({[this.state.name]: this.state.value})
-    }
-
-    render(){
-        return (
-            <Div >
-                <Label className={this.state.click} onClick={() => this.setState({click: 'on'})}>
-                    <p translate="no">{this.state.label}</p>
-                </Label>
-                <Input type="datetime-local" value={this.state.value} onChange={(event) => {this.handleState(event)}} onClick={() => this.setState({click: 'on'})} />
-            </ Div>
-        )
-    }
+    return (
+        <Div >
+            <Label className={click} onClick={() => setClick('on')}>
+                <p translate="no">{label}</p>
+            </Label>
+            <Input type="datetime-local" onChange={(event) => handleState(event)} onClick={() => setClick('on')} />
+        </ Div>
+    )
 }
 
 const Up = keyframes`

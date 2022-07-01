@@ -1,60 +1,62 @@
 import Api from "../api";
-import React from "react";
+import React , { useState } from "react";
 import SelectText from "../components/SelectText";
 import SelectDateTime from '../components/SelectDateTime'
 import styled from "styled-components";
 
-export default class PostMovimentacao extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            tipo: '',
-            data_inicio: '',
-            data_fim: '',
-            error: ''
-        }
-        this.setValues = this.setValues.bind(this)
-        this.tipos = ['embarque', 'descarga', 'gate in', 'gate out', 'reposicionamento', 'pesagem', 'scanner']
+export default function PostMovimentacao(){
+    const tipos = ['', 'embarque', 'descarga', 'gate in', 'gate out', 'reposicionamento', 'pesagem', 'scanner']
+
+    const [dados, setDados] = useState([
+        { name: 'tipo', value: ''},
+        { name: 'data_inicio', value: ''},
+        { name: 'data_fim', value: ''},
+    ])
+
+    const [error, setError] = useState()
+    const [sucess, setSucess] = useState()
+    const setValuesBind = setValues.bind()
+
+    function setValues(value, name){
+        console.log(value + ' ' + name)
+        const update = dados.map( (fields) => {
+            return fields.name === name ? {...fields, value: value} : fields
+        });
+        setDados(update)
     }
 
-    setValues(field){
-        this.setState(field)
-    }
-
-    handleInput(e){
-        this.setState({[e.target.name]: e.target.value})
-    }
-
-    sendForm(){
-        const data = {
-            tipo: this.state.tipo,
-            data_inicio: this.state.data_inicio,
-            data_fim: this.state.data_fim,
-        }
+    function sendForm(){
+        setError()
+        setSucess()
+        const data = {}
+        dados.map((field) => {     
+            return data[field.name] = field.value
+        })
+        console.log(data)
         if(!data['tipo'] || !data['data_inicio'] || !data['data_fim']){
-            this.setState({'error' : 'Todos os campos devem ser preenchidos'})
+            setError('Todos os campos devem ser preenchidos')
             console.log(data)
         } else {
             console.log(data)
             Api.post('movimentacao/', data)
-            .then(res => this.useState({'error': 'Criado com sucesso'}))
-            .catch(this.useState({'error' : 'Falha na conexão com o servidor!'}))
+            .then(res => setSucess('Criado com sucesso'))
+            .catch(erro => setError('Falha na conexão com o servidor!'))
         }
     }
 
-    render(){
-        return(
-            <Center>
-                <Title>Adicionar container</Title>
-                {this.state.error ? <Alert>{this.state.error}</Alert> : ''}
-                <SelectText fields={this.tipos} callback={this.setValues} name="tipo" label="Tipo" value={this.state.tipo} />
-                <SelectDateTime callback={this.setValues} name="data_inicio" label="Data e Hora de início" value={this.state.data_inicio} />
-                <SelectDateTime callback={this.setValues} name="data_fim" label="Data e Hora do final" value={this.state.data_fim} />
-                <Button onClick={() => this.sendForm()}>Submeter</Button>
-            </Center>
-        )
-    }
+    return(
+        <Center>
+            <Title>Adicionar container</Title>
+            {error ? <Alert>{error}</Alert> : ''}
+            {sucess ? <Sucess>{error}</Sucess> : ''}
+            <SelectText fields={tipos} callback={setValues} name="tipo" label="Tipo" value={tipos} />
+            <SelectDateTime callback={setValues} name="data_inicio" label="Data e Hora de início" />
+            <SelectDateTime callback={setValues} name="data_fim" label="Data e Hora do final" />
+            <Button onClick={() => sendForm()}>Submeter</Button>
+        </Center>
+    )
 }
+
 
 const Button = styled.button`
     width: 250px;
@@ -78,6 +80,11 @@ const Title = styled.h1`
 
 const Alert = styled.p`
     color: red;
+    font-size: 15px;
+`;
+
+const Sucess = styled.p`
+    color: green;
     font-size: 15px;
 `;
 
