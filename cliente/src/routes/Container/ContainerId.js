@@ -1,69 +1,75 @@
 import React , { useState, useEffect }from "react";
-import Api from "../api";
+import { useParams } from 'react-router-dom'
+import Api from "../../api";
 import styled from "styled-components";
 
-export default function Movimentacao(){
+export default function ContainerId(){
+    const { id } = useParams()
     const [dados, setDados] = useState()
     const [error, setError] = useState()
 
     useEffect(() => {
         async function getApi (){
-            await Api.get('movimentacao/')
+            await Api.get(`container/${id}`)
             .then(res => setDados(res.data))
             .catch(erro => setError('Falha na conexão com o servidor'))
         }
         getApi()
     }, [])
 
-    async function excluir(id){
-        await Api.delete(`movimentacao/${id}`)
-        .then(res => setDados(res.data))
-        .catch(erro => setError('Falha na conexão com o servidor'))
-
-    }
-
     return(
         <Center>
-            <Title>Movimentações</Title>
+            <Title>Container</Title>
             {error ? <Alert>{error}</Alert> : ''}
             <Table>
                 <HeaderTable>
+                    <FieldTable>Id</FieldTable>
+                    <FieldTable>Cliente</FieldTable>
+                    <FieldTable>Número</FieldTable>
                     <FieldTable>Tipo</FieldTable>
-                    <FieldTable>Data e Hora de Início</FieldTable>
-                    <FieldTable>Data e Hora de Fim</FieldTable>
-                    <FieldTable>Editar</FieldTable>
-                    <FieldTable>Exluir</FieldTable>
+                    <FieldTable>Status</FieldTable>
+                    <FieldTable>Categoria</FieldTable>
                 </HeaderTable>
             {dados && dados.map((dado) => (
                 <BodyTable>
-                    <FieldTable>{dado.tipo}</FieldTable>
-                    <FieldTable>{dado.data_inicio}</FieldTable>
-                    <FieldTable>{dado.data_fim}</FieldTable>
-                    <FieldTable><Button><Link href={'movimentacao/'+dado.id}>Editar</Link></Button></FieldTable>
-                    <FieldTable><Button onClick={() => excluir(dado.id)}>Excluir</Button></FieldTable> 
+                    <FieldTable><Input type="text" placeholder={dado.id}/></FieldTable>
+                    <FieldTable><Input type="text" placeholder={dado.cliente} /></FieldTable>
+                    <FieldTable><Input type="text" placeholder={dado.numero} /></FieldTable>
+                    <FieldTable><Input type="text" placeholder={dado.tipo} /></FieldTable>
+                    <FieldTable><Input type="text" placeholder={dado.status} /></FieldTable>
+                    <FieldTable><Input type="text" placeholder={dado.categoria} /></FieldTable>
                 </BodyTable>
             ))}
-                <FooterTable>
+                <tr>
                     <FieldTable></FieldTable>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <FieldTable><Button><Link href='movimentacao/post'>Adicionar</Link></Button></FieldTable>
-                </FooterTable>
+                    <FieldTable></FieldTable>
+                    <FieldTable></FieldTable>
+                    <FieldTable></FieldTable>
+                    <FieldTable></FieldTable>
+                    <FieldTable><Button>Atualizar</Button></FieldTable>
+                </tr>
             </Table>
         </Center>
     )
 
 }
 
+const Input = styled.input`
+    background-color: transparent;
+    border:none;
+    width: 90px;
+
+    &:focus{
+        border: none;
+    }
+`;
+
 const Button = styled.button`
-    width: 100%;
+    width: 10opx;
     height: 30px;
 
     border: none;
     background-color: #03A696;
-    color:white;
-    cursor: pointer;
 `;
 
 const Link = styled.a`

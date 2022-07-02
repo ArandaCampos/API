@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled , { keyframes } from 'styled-components';
 
-export default function InputLabel({ name, label, callback }){
+export default function InputLabel({ name, label, callback, value }){
 
     const [click, setClick] = useState('')
 
@@ -16,7 +16,7 @@ export default function InputLabel({ name, label, callback }){
             <Label className={click} onClick={() => setClick('on')}>
                 <p translate="no">{label}</p>
             </Label>
-            <Input name={name} onChange={(event) => handleState(event)} onFocus={() => setClick('on')}/>
+            <Input name={name} onChange={(event) => handleState(event)} onFocus={() => setClick('on')} >{value}</Input>
         </ Div>
     )
 }

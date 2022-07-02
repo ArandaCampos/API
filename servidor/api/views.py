@@ -1,8 +1,7 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from api.models import Container, Movimentacao
 from api.validator import validatorContainer, validatorMovimentacao
 import json
-import datetime
 
 def ContainerView(request):
     if request.method == 'GET':
@@ -21,8 +20,10 @@ def ContainerView(request):
         sta = parse_data['status']
         cat = parse_data['categoria']
         mov = int(parse_data['movimentacao'])
+        print(cliente)
         if (not validatorContainer(cliente, num, tipo, sta, cat)):
-            return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
+            # return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
+            return HttpResponseBadRequest('Valores do formulário incorretos', status=400)
         try:
             movimentacao = Movimentacao.objects.get(id__iexact=mov)
             novo = Container.objects.create(cliente=cliente, numero=num, tipo=tipo, status=sta, categoria=cat, movimentacao=movimentacao)
@@ -30,7 +31,7 @@ def ContainerView(request):
             return JsonResponse([{'msg': 'Criado com sucesso'}], safe=False)
         except:
             return JsonResponse([{'msg': 'Erro na criação'}], safe=False)
-            
+
 
 def ContainerIdView(request, id):
     if request.method == 'GET':
@@ -111,7 +112,7 @@ def RelatorioClienteView(request):
             re = list(Container.objects.filter(movimentacao__tipo__iexact='reposicionamento').values('cliente'))
             pe = list(Container.objects.filter(movimentacao__tipo__iexact='pesagem').values('cliente'))
             sc = list(Container.objects.filter(movimentacao__tipo__iexact='scanner').values('cliente'))
-            dados = [ 
+            dados = [
                 {
                     'tipo': 'Embarque',
                     'clientes': em
@@ -152,7 +153,7 @@ def RelatorioCountView(request):
         try:
             ex = Container.objects.filter(categoria__iexact='exportação').count()
             im = Container.objects.filter(categoria__iexact='importação').count()
-            dados = [ 
+            dados = [
                 {
                     'tipo': 'Exportação',
                     'quantia': ex

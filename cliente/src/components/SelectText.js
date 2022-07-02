@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled , { keyframes } from 'styled-components';
 
-export default function SelectText({label, fields, name, callback}){
+export default function SelectText({label, fields, name, callback, select}){
     
     const [click, setClick] = useState('')
 
@@ -12,12 +12,12 @@ export default function SelectText({label, fields, name, callback}){
     
     return (
         <Div >
-            <Label className={click} onClick={() => setClick('on')}>
+            <Label className={select ? 'on' : click} onClick={() => setClick('on')}>
                 <p translate="no">{label}</p>
             </Label>
             <Select onChange={(event) => handleState(event)} onClick={() => setClick('on')}>
             {fields && fields.map((value) => (
-                <Field value={value} key={value} onChange={(event) => handleState(event)} onClick={() => setClick('on')}>{value}</Field>    
+                <Field value={value} key={value} onChange={(event) => handleState(event)} onClick={() => setClick('on')} selected={value === select ? 'selected' : ''}>{value}</Field>    
             ))}
             </Select>
         </ Div>

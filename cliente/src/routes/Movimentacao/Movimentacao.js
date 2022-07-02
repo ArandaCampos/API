@@ -1,57 +1,60 @@
 import React , { useState, useEffect }from "react";
-import { useParams } from 'react-router-dom'
-import Api from "../api";
+import Api from "../../api";
 import styled from "styled-components";
 
-export default function MovimentacaoId(){
-    const { id } = useParams()
+export default function Movimentacao(){
     const [dados, setDados] = useState()
     const [error, setError] = useState()
-    const [update, setUpdate] = useState()
 
     useEffect(() => {
         async function getApi (){
-            await Api.get(`movimentacao/${id}`)
+            await Api.get('movimentacao/')
             .then(res => setDados(res.data))
             .catch(erro => setError('Falha na conexão com o servidor'))
         }
         getApi()
-    }, [update])
-    
+    }, [])
+
     async function excluir(id){
         await Api.delete(`movimentacao/${id}`)
         .then(res => setDados(res.data))
         .catch(erro => setError('Falha na conexão com o servidor'))
 
-        setUpdate('atualizar')
-    
     }
 
     return(
         <Center>
-            <Title>Movimentacao</Title>
-            {error ? <Alert>{error}</Alert> : ""}
+            <Title>Movimentações</Title>
+            {error ? <Alert>{error}</Alert> : ''}
             <Table>
                 <HeaderTable>
-                    <FieldTable>Id</FieldTable>
                     <FieldTable>Tipo</FieldTable>
                     <FieldTable>Data e Hora de Início</FieldTable>
                     <FieldTable>Data e Hora de Fim</FieldTable>
+                    <FieldTable>Editar</FieldTable>
+                    <FieldTable>Exluir</FieldTable>
                 </HeaderTable>
             {dados && dados.map((dado) => (
                 <BodyTable>
-                    <FieldTable>{dado.id}</FieldTable>
                     <FieldTable>{dado.tipo}</FieldTable>
                     <FieldTable>{dado.data_inicio}</FieldTable>
-                    <FieldTable>{dado.data_fim}</FieldTable> 
+                    <FieldTable>{dado.data_fim}</FieldTable>
+                    <FieldTable><Button><Link href={'movimentacao/'+dado.id}>Editar</Link></Button></FieldTable>
+                    <FieldTable><Button onClick={() => excluir(dado.id)}>Excluir</Button></FieldTable> 
                 </BodyTable>
             ))}
+                <FooterTable>
+                    <FieldTable></FieldTable>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <FieldTable><Button><Link href='/movimentacao/post/'>Adicionar</Link></Button></FieldTable>
+                </FooterTable>
             </Table>
         </Center>
     )
 
 }
-
 
 const Button = styled.button`
     width: 100%;
@@ -59,6 +62,8 @@ const Button = styled.button`
 
     border: none;
     background-color: #03A696;
+    color:white;
+    cursor: pointer;
 `;
 
 const Link = styled.a`

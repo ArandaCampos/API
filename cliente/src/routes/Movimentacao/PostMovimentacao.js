@@ -1,7 +1,7 @@
-import Api from "../api";
+import Api from "../../api";
 import React , { useState } from "react";
-import SelectText from "../components/SelectText";
-import SelectDateTime from '../components/SelectDateTime'
+import SelectText from "../../components/SelectText";
+import SelectDateTime from '../../components/SelectDateTime'
 import styled from "styled-components";
 
 export default function PostMovimentacao(){
@@ -49,9 +49,9 @@ export default function PostMovimentacao(){
             <Title>Adicionar container</Title>
             {error ? <Alert>{error}</Alert> : ''}
             {sucess ? <Sucess>{error}</Sucess> : ''}
-            <SelectText fields={tipos} callback={setValues} name="tipo" label="Tipo" value={tipos} />
-            <SelectDateTime callback={setValues} name="data_inicio" label="Data e Hora de início" />
-            <SelectDateTime callback={setValues} name="data_fim" label="Data e Hora do final" />
+            <SelectText fields={tipos} callback={setValuesBind} name="tipo" label="Tipo" />
+            <SelectDateTime callback={setValuesBind} name="data_inicio" label="Data e Hora de início" />
+            <SelectDateTime callback={setValuesBind} name="data_fim" label="Data e Hora do final" />
             <Button onClick={() => sendForm()}>Submeter</Button>
         </Center>
     )

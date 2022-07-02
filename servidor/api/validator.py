@@ -4,14 +4,19 @@ def validatorContainer(cliente, numero, tipo, status, categoria):
     status_list = ['cheio', 'vazio']
     categorias = ['importação', 'exportação']
     if (not cliente):
+        print('cliente')
         return False
     if (not re.match(r'[A-Z]{4}[0-9]{7}', numero)):
+        print('numero')
         return False
     if (not (tipo in tipos)):
+        print('tipo')
         return False
     if (not (status in status_list)):
+        print('status')
         return False
-    if (not (categoria in status_list)):
+    if (not (categoria in categorias)):
+        print('categoria')
         return False
     return True
 

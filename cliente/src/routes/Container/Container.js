@@ -1,5 +1,5 @@
 import React , { useState, useEffect }from "react";
-import Api from "../api";
+import Api from "../../api";
 import styled from "styled-components";
 
 export default function Cont(){
@@ -57,7 +57,7 @@ export default function Cont(){
                         <td></td>
                         <td></td>
                         <td></td>
-                        <FieldTable><Button><Link href='container/post'>Adicionar</Link></Button></FieldTable>
+                        <FieldTable><Button><Link href='/container/post/'>Adicionar</Link></Button></FieldTable>
                     </FooterTable>
                 </Table>
             </Center>

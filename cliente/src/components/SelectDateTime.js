@@ -1,20 +1,22 @@
 import React , { useState } from 'react';
 import styled , { keyframes } from 'styled-components';
 
-export default function SelectDateTime({ label, name, callback }){
+export default function SelectDateTime({ label, name, callback, value }){
     const [click, setClick] = useState('')
-
+    const [ v, setV ] = useState(value)
+    
     function handleState(event){
-        const value = event.target.value
-        callback(value, name)
+        const vCallback = event.target.value
+        setV(vCallback) 
+        callback(vCallback, name)
     }
 
     return (
         <Div >
-            <Label className={click} onClick={() => setClick('on')}>
+            <Label className={value ? 'on' : click} onClick={() => setClick('on')}>
                 <p translate="no">{label}</p>
             </Label>
-            <Input type="datetime-local" onChange={(event) => handleState(event)} onClick={() => setClick('on')} />
+            <Input type="datetime-local" onChange={(event) => handleState(event)} onClick={() => setClick('on')} value={v}/>
         </ Div>
     )
 }

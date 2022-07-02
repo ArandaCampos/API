@@ -1,7 +1,7 @@
-import Api from "../api";
-import React, { useState } from "react";
-import InputLabel from "../components/InputLabel";
-import SelectText from "../components/SelectText";
+import Api from "../../api";
+import React, { useState, useEffect } from "react";
+import InputLabel from '../../components/InputLabel'
+import SelectText from "../../components/SelectText";
 import styled from "styled-components";
 
 export default function PostContainer(){
@@ -10,8 +10,15 @@ export default function PostContainer(){
         { name: 'numero', value: ''},
         { name: 'tipo', value: ''},
         { name: 'status', value: ''},
-        { name: 'categoria', value: ''}
+        { name: 'categoria', value: ''},
+        { name: 'movimentacao', value: '2' }
     ])
+    // const [ids, setIds] = useState()
+
+    useEffect(() => {
+        const response = Api.get('movimentacao/')
+        console.log(response)
+    }, [])
 
     const [error, setError] = useState()
     const [sucess, setSucess] = useState()
@@ -29,7 +36,7 @@ export default function PostContainer(){
         setError()
         setSucess()
         const data = {}
-        dados.map((field) => {     
+        dados.map((field) => {
             return data[field.name] = field.value
         })
         console.log(data)
@@ -51,8 +58,8 @@ export default function PostContainer(){
             <Title>Adicionar container</Title>
             {error ? <Alert>{error}</Alert> : ''}
             {sucess ? <Sucess>{sucess}</Sucess> : ''}
-            <InputLabel callback={setValuesBind} name="cliente" label="Cliente" value='' />
-            <InputLabel callback={setValuesBind} name="numero" label="Numero" value='' />
+            <InputLabel callback={setValuesBind} name="cliente" label="Cliente" />
+            <InputLabel callback={setValuesBind} name="numero" label="Numero" />
             <SelectText fields={['','40', '20']} callback={setValuesBind} name="tipo" label="Tipo" />
             <SelectText fields={['','cheio', 'vazio']} callback={setValuesBind} name="status" label="Status" />
             <SelectText fields={['','importação', 'exportação']} callback={setValuesBind} name="categoria" label="Categoria" />
