@@ -22,6 +22,9 @@ A aplicação consiste em um CRUD de containeres e movimentações e um relatór
     # Instale as dependências
     (servidor) >> pip install -r requirements.txt
     
+    # Crie o banco de dados
+    (servidor) >> python manage.py makemigrations && python manage.py migrate
+    
     # Habilite o servidor
     (servidor) >> python manage.py runserver
     
