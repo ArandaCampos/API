@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled , { keyframes } from 'styled-components';
 
-export default function InputLabel({ name, label, callback, value }){
+export default function InputLabel({ name, label, callback, field }){
 
     const [click, setClick] = useState('')
 
@@ -13,10 +13,10 @@ export default function InputLabel({ name, label, callback, value }){
 
     return (
         <Div >
-            <Label className={click} onClick={() => setClick('on')}>
+            <Label className={field ? 'on' : click} onClick={() => setClick('on')}>
                 <p translate="no">{label}</p>
             </Label>
-            <Input name={name} onChange={(event) => handleState(event)} onFocus={() => setClick('on')} >{value}</Input>
+            <Input name={name} onChange={(event) => handleState(event)} onFocus={() => setClick('on')} defaultValue={field}></Input>
         </ Div>
     )
 }

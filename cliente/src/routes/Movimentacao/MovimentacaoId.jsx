@@ -21,7 +21,7 @@ export default function MovimentacaoId(){
         }
         
         getApi()
-    }, [])
+    }, [ id ])
     
     async function removeForm(id){
         await Api.delete(`movimentacao/${id}`)
@@ -33,13 +33,14 @@ export default function MovimentacaoId(){
     function setValues(value, name){
         console.log(value + ' ' + name)
         const update = dados.map( (fields) => {
-            if (name == 'tipo'){
+            if (name === 'tipo'){
                 return {...fields, tipo: value}
-            } else if (name == 'data_inicio'){
+            } else if (name === 'data_inicio'){
                 return {...fields, data_inicio: value}
-            } else if (name == 'data_fim'){
+            } else if (name === 'data_fim'){
                 return {...fields, data_fim: value}
             }
+            return fields
         });
         setDados(update)
     }
@@ -54,6 +55,7 @@ export default function MovimentacaoId(){
             tipo = dado.tipo
             data_inicio = dado.data_inicio
             data_fim = dado.data_fim
+            return 0;
         })
         console.log(tipo)
         if(!tipo || !data_inicio || !data_fim){
@@ -61,7 +63,7 @@ export default function MovimentacaoId(){
             console.log(dados)
         } else {
             console.log(dados)
-            Api.put('movimentacao/', dados)
+            Api.put(`movimentacao/${id}`, dados)
             .then(res => setSucess('Criado com sucesso'))
             .catch(erro => setError('Falha na conexão com o servidor!'))
         }

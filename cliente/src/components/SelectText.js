@@ -15,9 +15,9 @@ export default function SelectText({label, fields, name, callback, select}){
             <Label className={select ? 'on' : click} onClick={() => setClick('on')}>
                 <p translate="no">{label}</p>
             </Label>
-            <Select onChange={(event) => handleState(event)} onClick={() => setClick('on')}>
+            <Select onChange={(event) => handleState(event)} onClick={() => setClick('on')} defaultChecked={select}>
             {fields && fields.map((value) => (
-                <Field value={value} key={value} onChange={(event) => handleState(event)} onClick={() => setClick('on')} selected={value === select ? 'selected' : ''}>{value}</Field>    
+                <Field value={value} key={value} onChange={(event) => handleState(event)} onClick={() => setClick('on')} >{value}</Field>    
             ))}
             </Select>
         </ Div>

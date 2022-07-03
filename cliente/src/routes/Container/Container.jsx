@@ -28,36 +28,42 @@ export default function Cont(){
             <Center >
                 <Table>
                     <HeaderTable>
-                        <FieldTable>Id</FieldTable>
-                        <FieldTable>Cliente</FieldTable>
-                        <FieldTable>Número</FieldTable>
-                        <FieldTable>Tipo</FieldTable>
-                        <FieldTable>Status</FieldTable>
-                        <FieldTable>Categoria</FieldTable>
-                        <FieldTable>Editar</FieldTable>
-                        <FieldTable>Excluir</FieldTable>
+                        <tr>
+                            <FieldTable>Id</FieldTable>
+                            <FieldTable>Cliente</FieldTable>
+                            <FieldTable>Número</FieldTable>
+                            <FieldTable>Tipo</FieldTable>
+                            <FieldTable>Status</FieldTable>
+                            <FieldTable>Categoria</FieldTable>
+                            <FieldTable>Editar</FieldTable>
+                            <FieldTable>Excluir</FieldTable>
+                        </tr>
                     </HeaderTable>
-                {dados && dados.map((dado) => (
                     <BodyTable>
-                        <FieldTable>{dado.id}</FieldTable>
-                        <FieldTable>{dado.cliente}</FieldTable>
-                        <FieldTable>{dado.numero}</FieldTable>
-                        <FieldTable>{dado.tipo}</FieldTable>
-                        <FieldTable>{dado.status}</FieldTable>
-                        <FieldTable>{dado.categoria}</FieldTable>
-                        <FieldTable><Button><Link href={'container/'+dado.id}>Editar</Link></Button></FieldTable>
-                        <FieldTable><Button onClick={() => excluir(dado.id)}>Excluir</Button></FieldTable>
+                {dados && dados.map((dado) => (
+                        <tr key={dado.id}>
+                            <FieldTable>{dado.id}</FieldTable>
+                            <FieldTable>{dado.cliente}</FieldTable>
+                            <FieldTable>{dado.numero}</FieldTable>
+                            <FieldTable>{dado.tipo}</FieldTable>
+                            <FieldTable>{dado.status}</FieldTable>
+                            <FieldTable>{dado.categoria}</FieldTable>
+                            <FieldTable><Button><Link href={'container/'+dado.id}>Editar</Link></Button></FieldTable>
+                            <FieldTable><Button onClick={() => excluir(dado.id)}>Excluir</Button></FieldTable>
+                        </tr>
+                    ))}
                     </BodyTable>
-                ))}
                     <FooterTable>
-                        <FieldTable></FieldTable>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <FieldTable><Button><Link href='/container/post/'>Adicionar</Link></Button></FieldTable>
+                        <tr>
+                            <FieldTable></FieldTable>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <FieldTable><Button><Link href='/container/post/'>Adicionar</Link></Button></FieldTable>
+                        </tr>
                     </FooterTable>
                 </Table>
             </Center>
@@ -85,17 +91,17 @@ const Table = styled.table`
     border-collapse: separate;
     border-spacing: 0px;
 `;
-const HeaderTable = styled.tr`
+const HeaderTable = styled.thead`
     background-color: #04BF9D;
     color: black;
 `;
 
-const BodyTable = styled.tr`
+const BodyTable = styled.tbody`
     background-color: #DEEFE7;
     color:black;
 `;
 
-const FooterTable = styled.tr`
+const FooterTable = styled.tfoot`
     background-color: #DEEFE7;
     color:black;
 `;

@@ -37,9 +37,7 @@ def ContainerIdView(request, id):
         try:
             dados = list(Container.objects.filter(id=id).values())
         except:
-            dados = [ {
-                'msg': 'Falha na conexão com o banco de dados'
-            }]
+            dados = [{'msg': 'Falha na conexão com o banco de dados'}]
         return JsonResponse(dados, safe=False)
     elif request.method == 'DELETE':
         try:
@@ -52,7 +50,7 @@ def ContainerIdView(request, id):
             }]
         return JsonResponse(dados, safe=False)
     if request.method == 'PUT':
-        try: 
+        try:
             update = Container.objects.get(id__exact=id)
         except:
             return HttpResponseBadRequest('Valores do formulário incorretos', status=400)
@@ -87,7 +85,6 @@ def MovimentacaoView(request):
         tipo = parse_data['tipo']
         data_inicio = parse_data['data_inicio']
         data_fim = parse_data['data_fim']
-        print(data_inicio)
         if (not validatorMovimentacao(tipo, data_inicio, data_fim)):
             return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
         try:
@@ -118,7 +115,32 @@ def MovimentacaoIdView(request, id):
             dados = [ {
                 'msg': 'Falha na conexão com o banco de dados'
             }]
-    return JsonResponse(dados, safe=False)
+        return JsonResponse(dados, safe=False)
+    elif request.method == 'PUT':
+        try:
+            movimentacao = Movimentacao.objects.get(id=id)
+        except:
+            print('Não localizou a movimentação')
+        try:
+            print('Localizou a movimentação')
+            parse_data = json.load(request)
+            movimentacao.tipo = parse_data['tipo']
+            movimentacao.data_inicio = parse_data['data_inicio']
+            movimentacao.data_fim = parse_data['data_fim']
+            print(movimentacao.tipo)
+            if (not validatorMovimentacao(movimentacao['tipo'], movimentacao['data_inicio'], movimentacao['data_fim'])):
+                print('não é válido')
+                return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
+            print('Antes de criar')
+            movimentacao.save()
+            print('criou')
+            dados = [{'msg': 'Movimentação excluída com sucesso!'}]
+        except:
+            print('falhou')
+            dados = [ {
+                'msg': 'Falha na conexão com o banco de dados'
+            }]
+        return JsonResponse(dados, safe=False)
 
 
 

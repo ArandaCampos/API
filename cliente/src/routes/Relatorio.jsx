@@ -33,24 +33,31 @@ export default function Relatorio(){
             {error ? <Alert>{error}</Alert> : ''}
             <Table>
                 <HeaderTable>
-                    <FieldTable>Tipo</FieldTable>
-                    <FieldTable>Clientes</FieldTable>
+                    <tr>
+                        <FieldTable>Tipo</FieldTable>
+                        <FieldTable>Clientes</FieldTable>
+                    </tr>
                 </HeaderTable>
-            {dados && dados.map((dado) => (
                 <BodyTable>
-                    <FieldTable>{dado.tipo}</FieldTable>
-                    <BodyTable>
-                        {dado.clientes.map( (cliente) => (
-                            <FieldTable>{cliente.cliente}</FieldTable>
-                        ))}
-                    </BodyTable>
+                
+                {dados && dados.map((dado) => (
+                    <tr key={dado.id}>
+                        <FieldTable>{dado.tipo}</FieldTable>
+                        <FieldTable>
+                            <Row>
+                            {dado.clientes.map( (cliente) => (
+                                <div key={cliente.id}>{cliente.cliente}</div>
+                            ))}
+                            </Row>
+                        </FieldTable>
+                    </tr>
+                ))}
                 </BodyTable>
-            ))}
             </Table>
         
             <Column>
             {exportacao && exportacao.map( (count) => (
-                <Linear>                    
+                <Linear key={count.id}>                    
                     <h5>{count.tipo }</h5>
                     <h5>|</h5>
                     <h5>{count.quantia}</h5>
@@ -75,15 +82,19 @@ const Linear = styled.div`
     gap: 10px;
 `;
 
+const Row = styled.span`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+`;
+
 const Column = styled.div`
     margin-top: 35px; 
     display: flex;
     flex-direction: row;
     gap: 10px;
-`;
-const Link = styled.a`
-    text-decoration: none;
-    color: white;
 `;
 
 const Table = styled.table`
@@ -91,21 +102,15 @@ const Table = styled.table`
     border-collapse: separate;
     border-spacing: 0px;
 `;
-const HeaderTable = styled.tr`
+const HeaderTable = styled.thead`
     background-color: #04BF9D;
     color: black;
 `;
 
-const BodyTable = styled.tr`
+const BodyTable = styled.tbody`
     background-color: #DEEFE7;
     color:black;
 `;
-
-const FooterTable = styled.tr`
-    background-color: #DEEFE7;
-    color:black;
-`;
-
 
 const FieldTable = styled.th`
     padding: 10px 20px;

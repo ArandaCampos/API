@@ -11,9 +11,11 @@ export default function Movimentacao(){
             await Api.get('movimentacao/')
             .then(res => setDados(res.data))
             .catch(erro => setError('Falha na conexão com o servidor'))
+    
         }
+            
         getApi()
-    }, [])
+        }, [])
 
     async function excluir(id){
         await Api.delete(`movimentacao/${id}`)
@@ -28,27 +30,37 @@ export default function Movimentacao(){
             {error ? <Alert>{error}</Alert> : ''}
             <Table>
                 <HeaderTable>
-                    <FieldTable>Tipo</FieldTable>
-                    <FieldTable>Data e Hora de Início</FieldTable>
-                    <FieldTable>Data e Hora de Fim</FieldTable>
-                    <FieldTable>Editar</FieldTable>
-                    <FieldTable>Exluir</FieldTable>
+                    <tr>
+                        <FieldTable>Tipo</FieldTable>
+                        <FieldTable>Data e Hora de Início</FieldTable>
+                        <FieldTable>Data e Hora de Fim</FieldTable>
+                        <FieldTable>Editar</FieldTable>
+                        <FieldTable>Exluir</FieldTable>
+                    </tr>
                 </HeaderTable>
-            {dados && dados.map((dado) => (
                 <BodyTable>
-                    <FieldTable>{dado.tipo}</FieldTable>
-                    <FieldTable>{dado.data_inicio}</FieldTable>
-                    <FieldTable>{dado.data_fim}</FieldTable>
-                    <FieldTable><Button><Link href={'movimentacao/'+dado.id}>Editar</Link></Button></FieldTable>
-                    <FieldTable><Button onClick={() => excluir(dado.id)}>Excluir</Button></FieldTable> 
+                {dados && dados.map((dado) => (
+                    <tr key={dado.id}>
+                        <FieldTable>{dado.tipo}</FieldTable>
+                        <FieldTable>{dado.data_inicio}</FieldTable>
+                        <FieldTable>{dado.data_fim}</FieldTable>
+                        <FieldTable>
+                            <Button><Link href={'movimentacao/'+dado.id}>Editar</Link></Button>
+                        </FieldTable>
+                        <FieldTable >
+                            <Button onClick={() => excluir(dado.id)}><Link href={'movimentacao/'}>Excluir</Link></Button>
+                        </FieldTable> 
+                    </tr>
+                ))}
                 </BodyTable>
-            ))}
                 <FooterTable>
-                    <FieldTable></FieldTable>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <FieldTable><Button><Link href='/movimentacao/post/'>Adicionar</Link></Button></FieldTable>
+                    <tr>
+                        <FieldTable></FieldTable>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <FieldTable><Link href='/movimentacao/post/'><Button>Adicionar</Button></Link></FieldTable>
+                    </tr>
                 </FooterTable>
             </Table>
         </Center>
@@ -76,23 +88,23 @@ const Table = styled.table`
     border-collapse: separate;
     border-spacing: 0px;
 `;
-const HeaderTable = styled.tr`
+const HeaderTable = styled.thead`
     background-color: #04BF9D;
     color: black;
 `;
 
-const BodyTable = styled.tr`
+const BodyTable = styled.tbody`
     background-color: #DEEFE7;
     color:black;
 `;
 
-const FooterTable = styled.tr`
+const FooterTable = styled.tfoot`
     background-color: #DEEFE7;
     color:black;
 `;
 
 
-const FieldTable = styled.th`
+const FieldTable = styled.td`
     padding: 10px 20px;
 `;
 

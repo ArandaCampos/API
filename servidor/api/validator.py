@@ -23,9 +23,12 @@ def validatorContainer(cliente, numero, tipo, status, categoria):
 def validatorMovimentacao(tipo, data_inicio, data_fim):
     tipos = ['embarque', 'descarga', 'gate in', 'gate out', 'reposicionamento', 'pesagem', 'scanner']
     if (not (tipo in tipos)):
+        print('tipo')
         return False
     if (not re.match(r'[0-9]{4}[-][0-9]{2}[-][0-9]{2}[T][0-9]{2}:[0-9]{2}', data_inicio)):
+        print('data inicio')
         return False
     if (not re.match(r'[0-9]{4}[-][0-9]{2}[-][0-9]{2}[T][0-9]{2}:[0-9]{2}', data_fim)):
+        print('data fim')
         return False
     return True
