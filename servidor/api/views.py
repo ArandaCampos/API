@@ -20,7 +20,6 @@ def ContainerView(request):
         sta = parse_data['status']
         cat = parse_data['categoria']
         mov = int(parse_data['movimentacao'])
-        print(cliente)
         if (not validatorContainer(cliente, num, tipo, sta, cat)):
             # return JsonResponse([{'msg': 'Valores do formulário incorretos'}], safe=False)
             return HttpResponseBadRequest('Valores do formulário incorretos', status=400)
@@ -52,6 +51,27 @@ def ContainerIdView(request, id):
                 'msg': 'Falha na conexão com o banco de dados'
             }]
         return JsonResponse(dados, safe=False)
+    if request.method == 'PUT':
+        try: 
+            update = Container.objects.get(id__exact=id)
+        except:
+            return HttpResponseBadRequest('Valores do formulário incorretos', status=400)
+        parse_data = json.load(request)
+        update['cliente'] = parse_data['cliente']
+        update['numero'] = parse_data['numero']
+        update['tipo'] = int(parse_data['tipo'])
+        update['status'] = parse_data['status']
+        update['categoria'] = parse_data['categoria']
+        mov = int(parse_data['movimentacao'])
+        update['movimentacao'] = Movimentacao.objects.get(id__iexact=mov)
+        if (not validatorContainer(update['cliente'], update['numero'], update['tipo'], update['status'], update['categoria'])):
+            return HttpResponseBadRequest('Valores do formulário incorretos', status=400)
+        try:
+            update.save()
+            return JsonResponse([{'msg': 'Criado com sucesso'}], safe=False)
+        except:
+            return JsonResponse([{'msg': 'Erro na criação'}], safe=False)
+
 
 def MovimentacaoView(request):
     if request.method == 'GET':
